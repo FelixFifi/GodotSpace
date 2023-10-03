@@ -1,14 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://brur380voisvy"]
+[gd_scene load_steps=5 format=3 uid="uid://brur380voisvy"]
 
 [ext_resource type="PackedScene" uid="uid://dwdjpbjw2q63r" path="res://ship.tscn" id="1_ohnsp"]
+[ext_resource type="PackedScene" uid="uid://e73yptr4omhp" path="res://asteroid_first.tscn" id="2_g70br"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ia5ky"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_p4svq"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="Node3D" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(7.09488, 0, 0, 0, 0.360977, 0, 0, 0, 11.3747, 0, 1.47349, 0)
 mesh = SubResource("BoxMesh_ia5ky")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_p4svq")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.787376, 0.616473, 0, -0.616473, 0.787376, 0, 6.60345, 0)
@@ -18,3 +27,9 @@ transform = Transform3D(0.786493, 0, 0.617599, 0, 1, 0, -0.617599, 0, 0.786493, 
 
 [node name="Ship" parent="Node3D" instance=ExtResource("1_ohnsp")]
 transform = Transform3D(-0.707206, 0, 0.707008, 0, 1, 0, -0.707008, 0, -0.707206, 11.1409, 4.64082, 10.809)
+
+[node name="AnimatableBody3D" parent="." instance=ExtResource("2_g70br")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.73962, -19.8308)
+
+[node name="AnimatableBody3D2" parent="." instance=ExtResource("2_g70br")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4474, 5.82034, -7.42021)

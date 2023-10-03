@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwdjpbjw2q63r"]
+[gd_scene load_steps=8 format=3 uid="uid://dwdjpbjw2q63r"]
 
 [ext_resource type="Script" path="res://ship.gd" id="1_buv15"]
 
@@ -18,12 +18,17 @@ sky_material = SubResource("ProceduralSkyMaterial_r7alb")
 background_mode = 2
 sky = SubResource("Sky_5s5mf")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27dm4"]
+height = 2.644
+
 [node name="Ship" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 gravity_scale = 0.0
+max_contacts_reported = 3
+contact_monitor = true
 lock_rotation = true
 linear_damp = 0.5
 script = ExtResource("1_buv15")
@@ -37,6 +42,28 @@ shape = SubResource("CapsuleShape3D_vsvb5")
 transform = Transform3D(1.03193, 0, 0, 0, 1.33306, 0, 0, 0, 1.06099, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_3204o")
 
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CollisionShape3D/MeshInstance3D"]
+transform = Transform3D(1, 7.10543e-15, 2.11758e-22, 0, 1, 0, -8.47033e-22, 3.55271e-15, 1, -8.88178e-15, -0.423885, -0.607997)
+mesh = SubResource("CapsuleMesh_3204o")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="CollisionShape3D/MeshInstance3D"]
+transform = Transform3D(1, 1.09378e-35, 2.05206e-21, 0, 1, -5.33016e-15, -2.05206e-21, 5.33016e-15, 1, 0, -0.424, 0.608)
+mesh = SubResource("CapsuleMesh_3204o")
+skeleton = NodePath("../MeshInstance3D2")
+
 [node name="Camera3D" type="Camera3D" parent="CollisionShape3D"]
 transform = Transform3D(1.91069e-15, -1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1, 0, -4.37114e-08, -0.957585, -3.93865, 0)
 environment = SubResource("Environment_yjho4")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.566912, -0.000428014, -0.634344)
+visible = false
+shape = SubResource("CapsuleShape3D_27dm4")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.567, 0, 0.634)
+visible = false
+shape = SubResource("CapsuleShape3D_27dm4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

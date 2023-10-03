@@ -36,3 +36,7 @@ func _process(delta):
 	force = acceleration * (p2 - p1)
 	
 	apply_central_force(force)
+
+
+func _on_body_entered(body):
+	print("Crash")
