@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://brur380voisvy"]
+[gd_scene load_steps=12 format=3 uid="uid://brur380voisvy"]
 
 [ext_resource type="PackedScene" uid="uid://dwdjpbjw2q63r" path="res://ship.tscn" id="1_ohnsp"]
 [ext_resource type="PackedScene" uid="uid://e73yptr4omhp" path="res://asteroid_first.tscn" id="2_g70br"]
 [ext_resource type="Script" path="res://ThrottleBar.gd" id="3_8kchh"]
 [ext_resource type="Script" path="res://BoostBar.gd" id="4_j3pb1"]
+[ext_resource type="PackedScene" uid="uid://y118qpgdgoil" path="res://race_controller.tscn" id="5_kg375"]
+[ext_resource type="PackedScene" uid="uid://ca3u5uepnaw7c" path="res://race_checkpoint.tscn" id="5_lmfxi"]
+[ext_resource type="Script" path="res://CheckpointsLabel.gd" id="5_tp8bf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ia5ky"]
 
@@ -45,18 +48,20 @@ transform = Transform3D(0.409985, -0.195492, 0.890896, 0.430401, 0.902638, 0, -0
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = 79.0
+offset_top = -262.0
 offset_right = 113.0
-offset_bottom = 601.0
+offset_bottom = 260.0
 grow_vertical = 2
 size_flags_horizontal = 0
 
@@ -96,3 +101,32 @@ grow_horizontal = 2
 grow_vertical = 0
 value = 100.0
 script = ExtResource("4_j3pb1")
+
+[node name="Panel2" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.0
+offset_top = 20.0
+offset_right = 152.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="CheckpointsLabel" type="Label" parent="Control/Panel2"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 8.0
+offset_right = 287.0
+offset_bottom = 31.0
+text = "Checkpoints: 0"
+script = ExtResource("5_tp8bf")
+
+[node name="RaceController" parent="." instance=ExtResource("5_kg375")]
+unique_name_in_owner = true
+
+[node name="RaceCheckpoint" parent="RaceController" instance=ExtResource("5_lmfxi")]
+transform = Transform3D(0.672677, -0.739936, 0, 0.739936, 0.672677, 0, 0, 0, 1, -25.3995, 18, 0)
+
+[node name="RaceCheckpoint2" parent="RaceController" instance=ExtResource("5_lmfxi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.054, 61.8507, 0)
