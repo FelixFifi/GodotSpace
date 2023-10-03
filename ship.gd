@@ -7,11 +7,19 @@ extends RigidBody3D
 @export var max_acceleration := 30
 @export var acceleration: float = 5
 @export var throttle_speed := 15
+@export var boost_acceleration := 100
 
 signal throttle_changed(value, max_value)
+signal boost_activated(duration_timer, cooldown_timer)
 
 var force: Vector3 = Vector3.ZERO
+var normal_accleration := 0.0
+var boost_active := false
+
+
 @onready var collision_shape_3d = $CollisionShape3D
+@onready var boost_cooldown = %BoostCooldown
+@onready var boost_duration = %BoostDuration
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,6 +45,20 @@ func _process(delta):
 		acceleration = clamp(acceleration + delta * throttle_speed, 0, max_acceleration)
 	if Input.is_action_pressed("throttle_down"):
 		acceleration = clamp(acceleration - delta * throttle_speed, 0, max_acceleration)
+	
+	if Input.is_action_pressed("boost") and boost_duration.is_stopped() and boost_cooldown.is_stopped():
+			normal_accleration = acceleration
+			boost_active = true
+			boost_duration.start()
+			boost_activated.emit(boost_duration, boost_cooldown)
+	
+	if boost_active:
+		if !boost_duration.is_stopped():
+			acceleration = boost_acceleration
+		else:
+			boost_active = false
+			acceleration = normal_accleration
+			boost_cooldown.start()
 	
 	throttle_changed.emit(acceleration, max_acceleration)
 	
