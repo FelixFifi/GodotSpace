@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://brur380voisvy"]
+[gd_scene load_steps=6 format=3 uid="uid://brur380voisvy"]
 
 [ext_resource type="PackedScene" uid="uid://dwdjpbjw2q63r" path="res://ship.tscn" id="1_ohnsp"]
 [ext_resource type="PackedScene" uid="uid://e73yptr4omhp" path="res://asteroid_first.tscn" id="2_g70br"]
+[ext_resource type="Script" path="res://ThrottleBar.gd" id="3_8kchh"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ia5ky"]
 
@@ -26,10 +27,40 @@ transform = Transform3D(1, 0, 0, 0, 0.787376, 0.616473, 0, -0.616473, 0.787376, 
 transform = Transform3D(0.786493, 0, 0.617599, 0, 1, 0, -0.617599, 0, 0.786493, 0, 0, 0)
 
 [node name="Ship" parent="Node3D" instance=ExtResource("1_ohnsp")]
+unique_name_in_owner = true
 transform = Transform3D(-0.707206, 0, 0.707008, 0, 1, 0, -0.707008, 0, -0.707206, 11.1409, 4.64082, 10.809)
 
 [node name="AnimatableBody3D" parent="." instance=ExtResource("2_g70br")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.73962, -19.8308)
+transform = Transform3D(-0.492925, 0.870072, 0, -0.870072, -0.492925, 0, 0, 0, 1, 0, 10.0491, 10.1625)
 
 [node name="AnimatableBody3D2" parent="." instance=ExtResource("2_g70br")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4474, 5.82034, -7.42021)
+transform = Transform3D(0.409985, -0.195492, 0.890896, 0.430401, 0.902638, 0, -0.804156, 0.383442, 0.454208, 6.4474, 5.82034, -7.42021)
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -225.0
+offset_right = 113.0
+offset_bottom = 225.0
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="ThrottleBar" type="ProgressBar" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -197.0
+offset_right = 34.5
+offset_bottom = 198.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 4.88
+value = 0.4
+fill_mode = 3
+show_percentage = false
+script = ExtResource("3_8kchh")

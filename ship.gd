@@ -2,9 +2,13 @@ extends RigidBody3D
 
 @export var max_speed: float = 10
 @export var roll_speed: float = 1
-@export var yaw_speed: float = 1
+@export var yaw_speed: float = 0.2
 @export var pitch_speed: float = 1
-@export var acceleration: float = 1
+@export var max_acceleration := 30
+@export var acceleration: float = 5
+@export var throttle_speed := 15
+
+signal throttle_changed(value, max_value)
 
 var force: Vector3 = Vector3.ZERO
 @onready var collision_shape_3d = $CollisionShape3D
@@ -29,6 +33,12 @@ func _process(delta):
 		collision_shape_3d.rotate_object_local(Vector3.RIGHT, -yaw_speed * delta)
 	if Input.is_action_pressed("yaw_right"):
 		collision_shape_3d.rotate_object_local(Vector3.RIGHT, yaw_speed * delta)
+	if Input.is_action_pressed("throttle_up"):
+		acceleration = clamp(acceleration + delta * throttle_speed, 0, max_acceleration)
+	if Input.is_action_pressed("throttle_down"):
+		acceleration = clamp(acceleration - delta * throttle_speed, 0, max_acceleration)
+	
+	throttle_changed.emit(acceleration, max_acceleration)
 	
 	var p1 = collision_shape_3d.to_global(Vector3.ZERO)
 	var p2 = collision_shape_3d.to_global(Vector3.UP)
@@ -36,7 +46,6 @@ func _process(delta):
 	force = acceleration * (p2 - p1)
 	
 	apply_central_force(force)
-
 
 func _on_body_entered(body):
 	print("Crash")
