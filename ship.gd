@@ -15,6 +15,7 @@ signal boost_activated(duration_timer, cooldown_timer)
 var force: Vector3 = Vector3.ZERO
 var normal_accleration := 0.0
 var boost_active := false
+var dead = false
 
 
 @onready var collision_shape_3d = $CollisionShape3D
@@ -28,6 +29,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if dead:
+		return
 	
 	if Input.is_action_pressed("pitch_up"):
 		collision_shape_3d.rotate_object_local(Vector3.FORWARD, -pitch_speed * delta)
@@ -70,4 +73,8 @@ func _process(delta):
 	apply_central_force(force)
 
 func _on_body_entered(body):
-	print("Crash")
+	dead = true
+	var fire_scene := preload("res://fire.tscn")
+	var fire = fire_scene.instantiate()
+	fire.scale = 2 * Vector3.ONE
+	add_child(fire)
