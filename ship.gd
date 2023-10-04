@@ -14,6 +14,7 @@ const MAX_DEAD_SHIPS = 5
 
 signal throttle_changed(value, max_value)
 signal boost_activated(duration_timer, cooldown_timer)
+signal respawned(new_ship)
 
 var force: Vector3 = Vector3.ZERO
 var normal_accleration := 0.0
@@ -25,15 +26,13 @@ var dead_ships: Array[Ship] = []
 @onready var boost_cooldown = %BoostCooldown
 @onready var boost_duration = %BoostDuration
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if dead:
 		return
+	
+	if Input.is_action_just_pressed("respawn"):
+		die()
 	
 	if Input.is_action_pressed("pitch_up"):
 		collision_shape_3d.rotate_object_local(Vector3.FORWARD, -pitch_speed * delta)
@@ -76,6 +75,9 @@ func _process(delta):
 	apply_central_force(force)
 
 func _on_body_entered(body):
+	die()
+	
+func die():
 	if dead:
 		return
 	dead = true
@@ -89,6 +91,7 @@ func _on_body_entered(body):
 	var spawn_point = get_parent()
 	spawn_point.add_child(new_ship)
 	new_ship.make_current()
+	respawned.emit(new_ship)
 	
 	dead_ships.append(self)
 	new_ship.expire_old_ships(dead_ships)

@@ -1,14 +1,27 @@
 extends ProgressBar
 
-@onready var ship := %Ship
+@onready var ship : Ship = %Ship
+@onready var spawn_point = %SpawnPoint
+
 
 var cooldown_timer: Timer = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ship.boost_activated.connect(boost_activated)
+	spawn_point.ship_respawned.connect(_on_spawnpoint_ship_respawned)
+	ship.boost_activated.connect(_boost_activated)
+
+func _on_spawnpoint_ship_respawned(new_ship):
+	ship.boost_activated.disconnect(_boost_activated)
+	new_ship.boost_activated.connect(_boost_activated)
 	
-func boost_activated(event_duration_timer, event_cooldown_timer):
+	cooldown_timer = null
+	value = max_value
+	
+	ship = new_ship
+	
+
+func _boost_activated(event_duration_timer, event_cooldown_timer):
 	cooldown_timer = event_cooldown_timer
 
 func _process(delta):
