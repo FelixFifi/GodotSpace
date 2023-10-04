@@ -33,12 +33,13 @@ shape = SubResource("ConcavePolygonShape3D_p4svq")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.787376, 0.616473, 0, -0.616473, 0.787376, 0, 6.60345, 0)
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(0.786493, 0, 0.617599, 0, 1, 0, -0.617599, 0, 0.786493, 0, 0, 0)
-
-[node name="Ship" parent="Node3D" instance=ExtResource("1_ohnsp")]
+[node name="SpawnPoint" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-0.707206, 0, 0.707008, 0, 1, 0, -0.707008, 0, -0.707206, 11.1409, 4.64082, 10.809)
+transform = Transform3D(-4.37114e-08, -0.185855, 0.982577, 0, 0.982577, 0.185855, -1, 8.12399e-09, -4.29498e-08, 25.5422, 11.1751, -2.63561e-07)
+
+[node name="Ship" parent="SpawnPoint" instance=ExtResource("1_ohnsp")]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="AnimatableBody3D" parent="." instance=ExtResource("2_g70br")]
 transform = Transform3D(-0.492925, 0.870072, 0, -0.870072, -0.492925, 0, 0, 0, 1, 0, 10.0491, 10.1625)

@@ -51,7 +51,7 @@ transform = Transform3D(1, 1.09378e-35, 2.05206e-21, 0, 1, -5.33016e-15, -2.0520
 mesh = SubResource("CapsuleMesh_3204o")
 skeleton = NodePath("../MeshInstance3D2")
 
-[node name="Camera3D" type="Camera3D" parent="CollisionShape3D"]
+[node name="ShipCamera" type="Camera3D" parent="CollisionShape3D"]
 transform = Transform3D(1.91069e-15, -1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1, 0, -4.37114e-08, -0.957585, -3.93865, 0)
 environment = SubResource("Environment_yjho4")
 

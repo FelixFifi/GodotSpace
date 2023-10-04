@@ -1,4 +1,7 @@
+class_name Ship
 extends RigidBody3D
+
+const MAX_DEAD_SHIPS = 5
 
 @export var max_speed: float = 10
 @export var roll_speed: float = 1
@@ -16,7 +19,7 @@ var force: Vector3 = Vector3.ZERO
 var normal_accleration := 0.0
 var boost_active := false
 var dead = false
-
+var dead_ships: Array[Ship] = []
 
 @onready var collision_shape_3d = $CollisionShape3D
 @onready var boost_cooldown = %BoostCooldown
@@ -73,8 +76,30 @@ func _process(delta):
 	apply_central_force(force)
 
 func _on_body_entered(body):
+	if dead:
+		return
 	dead = true
 	var fire_scene := preload("res://fire.tscn")
 	var fire = fire_scene.instantiate()
 	fire.scale = 2 * Vector3.ONE
 	add_child(fire)
+	
+	var ship_scene := load("res://ship.tscn")
+	var new_ship : Ship = ship_scene.instantiate()
+	var spawn_point = get_parent()
+	spawn_point.add_child(new_ship)
+	new_ship.make_current()
+	
+	dead_ships.append(self)
+	new_ship.expire_old_ships(dead_ships)
+
+func make_current():
+	var camera: Camera3D = $CollisionShape3D/ShipCamera
+	camera.make_current()
+
+func expire_old_ships(previous_ships: Array[Ship]):
+	dead_ships = previous_ships
+	
+	if (dead_ships.size() > MAX_DEAD_SHIPS):
+		var ship_to_expire : Ship = dead_ships.pop_front()
+		ship_to_expire.queue_free()
