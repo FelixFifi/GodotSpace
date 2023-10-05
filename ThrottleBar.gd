@@ -10,12 +10,12 @@ var boost_active := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	spawn_point.ship_respawned.connect(_on_spawnpoint_ship_respawned)
 	_bind_events()
 
 func _bind_events():
 	ship.throttle_changed.connect(_on_throttle_changed)
 	ship.boost_activated.connect(_boost_activated)
-	spawn_point.ship_respawned.connect(_on_spawnpoint_ship_respawned)
 
 
 func _on_throttle_changed(new_throttle, max_throttle):
