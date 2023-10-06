@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bp3ev7u0kdac6"]
+[gd_scene load_steps=9 format=3 uid="uid://bp3ev7u0kdac6"]
+
+[ext_resource type="AudioStream" uid="uid://bvfk4p4xntxa4" path="res://fire.wav" id="1_i2aqq"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g0gw0"]
 spread = 180.0
@@ -39,3 +41,10 @@ draw_pass_1 = SubResource("BoxMesh_7gg4b")
 [node name="Yellow" type="GPUParticles3D" parent="."]
 process_material = SubResource("ParticleProcessMaterial_g0gw0")
 draw_pass_1 = SubResource("BoxMesh_qodbi")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("1_i2aqq")
+volume_db = 2.883
+unit_size = 17.2
+autoplay = true
+max_distance = 16.45
