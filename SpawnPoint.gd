@@ -1,3 +1,4 @@
+class_name SpawnPoint
 extends Node3D
 
 signal ship_respawned(new_ship)
@@ -10,7 +11,10 @@ func _ready():
 func _on_ship_respawned(new_ship):
 	ship.respawned.disconnect(_on_ship_respawned)
 	new_ship.respawned.connect(_on_ship_respawned)
-	
+
 	ship_respawned.emit(new_ship)
-	
+
 	ship = new_ship
+
+func get_ship():
+	return ship

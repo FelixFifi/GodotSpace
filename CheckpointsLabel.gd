@@ -12,5 +12,5 @@ func _ready():
 
 func _on_race_controller_checkpoint_hit(current, goal):
 	var label_format = LABEL_FORMAT if current < goal else LABEL_FORMAT_WON
-	
+
 	text = label_format.format({"current": current, "goal": goal})

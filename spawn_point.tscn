@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc3mfcgqkcjqp"]
+
+[ext_resource type="Script" path="res://SpawnPoint.gd" id="1_f6351"]
+[ext_resource type="PackedScene" uid="uid://dwdjpbjw2q63r" path="res://ship.tscn" id="2_sqxsf"]
+
+[node name="SpawnPoint" type="Node3D"]
+transform = Transform3D(-4.37114e-08, -0.185855, 0.982577, 0, 0.982577, 0.185855, -1, 8.12399e-09, -4.29498e-08, 25.5422, 11.1751, -2.63561e-07)
+script = ExtResource("1_f6351")
+
+[node name="Ship" parent="." instance=ExtResource("2_sqxsf")]
+unique_name_in_owner = true

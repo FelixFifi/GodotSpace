@@ -30,10 +30,10 @@ var dead_ships: Array[Ship] = []
 func _process(delta):
 	if dead:
 		return
-	
+
 	if Input.is_action_just_pressed("respawn"):
 		die()
-	
+
 	if Input.is_action_pressed("pitch_up"):
 		collision_shape_3d.rotate_object_local(Vector3.FORWARD, -pitch_speed * delta)
 	if Input.is_action_pressed("pitch_down"):
@@ -50,13 +50,13 @@ func _process(delta):
 		acceleration = clamp(acceleration + delta * throttle_speed, 0, max_acceleration)
 	if Input.is_action_pressed("throttle_down"):
 		acceleration = clamp(acceleration - delta * throttle_speed, 0, max_acceleration)
-	
+
 	if Input.is_action_pressed("boost") and boost_duration.is_stopped() and boost_cooldown.is_stopped():
 			normal_accleration = acceleration
 			boost_active = true
 			boost_duration.start()
 			boost_activated.emit(boost_duration, boost_cooldown)
-	
+
 	if boost_active:
 		if !boost_duration.is_stopped():
 			acceleration = boost_acceleration
@@ -64,19 +64,19 @@ func _process(delta):
 			boost_active = false
 			acceleration = normal_accleration
 			boost_cooldown.start()
-	
+
 	throttle_changed.emit(acceleration, max_acceleration)
-	
+
 	var p1 = collision_shape_3d.to_global(Vector3.ZERO)
 	var p2 = collision_shape_3d.to_global(Vector3.UP)
-	
+
 	force = acceleration * (p2 - p1)
-	
+
 	apply_central_force(force)
 
 func _on_body_entered(body):
 	die()
-	
+
 func die():
 	if dead:
 		return
@@ -85,14 +85,14 @@ func die():
 	var fire = fire_scene.instantiate()
 	fire.scale = 2 * Vector3.ONE
 	add_child(fire)
-	
+
 	var ship_scene := load("res://ship.tscn")
 	var new_ship : Ship = ship_scene.instantiate()
 	var spawn_point = get_parent()
 	spawn_point.add_child(new_ship)
 	new_ship.make_current()
 	respawned.emit(new_ship)
-	
+
 	dead_ships.append(self)
 	new_ship.expire_old_ships(dead_ships)
 
@@ -102,7 +102,7 @@ func make_current():
 
 func expire_old_ships(previous_ships: Array[Ship]):
 	dead_ships = previous_ships
-	
+
 	if (dead_ships.size() > MAX_DEAD_SHIPS):
 		var ship_to_expire : Ship = dead_ships.pop_front()
 		ship_to_expire.queue_free()
