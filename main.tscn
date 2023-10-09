@@ -1,23 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://brur380voisvy"]
+[gd_scene load_steps=8 format=3 uid="uid://brur380voisvy"]
 
 [ext_resource type="PackedScene" uid="uid://cc3mfcgqkcjqp" path="res://spawn_point.tscn" id="1_b522c"]
 [ext_resource type="PackedScene" uid="uid://e73yptr4omhp" path="res://asteroid_first.tscn" id="2_g70br"]
-[ext_resource type="Script" path="res://ThrottleBar.gd" id="3_8kchh"]
-[ext_resource type="Script" path="res://BoostBar.gd" id="4_j3pb1"]
+[ext_resource type="PackedScene" uid="uid://dcauprb4h3rxq" path="res://hud.tscn" id="3_t47ne"]
 [ext_resource type="PackedScene" uid="uid://y118qpgdgoil" path="res://race_controller.tscn" id="5_kg375"]
 [ext_resource type="PackedScene" uid="uid://ca3u5uepnaw7c" path="res://race_checkpoint.tscn" id="5_lmfxi"]
-[ext_resource type="Script" path="res://CheckpointsLabel.gd" id="5_tp8bf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ia5ky"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_p4svq"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvhdx"]
-bg_color = Color(0.572549, 0.596078, 0.698039, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jd6y"]
-bg_color = Color(0, 0.396078, 0.498039, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -42,81 +34,7 @@ transform = Transform3D(-0.492925, 0.870072, 0, -0.870072, -0.492925, 0, 0, 0, 1
 [node name="AnimatableBody3D2" parent="." instance=ExtResource("2_g70br")]
 transform = Transform3D(0.409985, -0.195492, 0.890896, 0.430401, 0.902638, 0, -0.804156, 0.383442, 0.454208, 6.4474, 5.82034, -7.42021)
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="Control"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -262.0
-offset_right = 113.0
-offset_bottom = 260.0
-grow_vertical = 2
-size_flags_horizontal = 0
-
-[node name="ThrottleBar" type="ProgressBar" parent="Control/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -34.5
-offset_top = -242.0
-offset_right = 34.5
-offset_bottom = 147.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_nvhdx")
-theme_override_styles/fill = SubResource("StyleBoxFlat_8jd6y")
-max_value = 4.88
-value = 0.4
-fill_mode = 3
-show_percentage = false
-script = ExtResource("3_8kchh")
-
-[node name="BoostBar" type="ProgressBar" parent="Control/Panel"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -34.5
-offset_top = -68.0
-offset_right = 36.5
-offset_bottom = -41.0
-grow_horizontal = 2
-grow_vertical = 0
-value = 100.0
-script = ExtResource("4_j3pb1")
-
-[node name="Panel2" type="Panel" parent="Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -148.0
-offset_top = 20.0
-offset_right = 152.0
-offset_bottom = 60.0
-grow_horizontal = 2
-
-[node name="CheckpointsLabel" type="Label" parent="Control/Panel2"]
-layout_mode = 0
-offset_left = 13.0
-offset_top = 8.0
-offset_right = 287.0
-offset_bottom = 31.0
-text = "Checkpoints: 0"
-script = ExtResource("5_tp8bf")
+[node name="HUD" parent="." instance=ExtResource("3_t47ne")]
 
 [node name="RaceController" parent="." instance=ExtResource("5_kg375")]
 unique_name_in_owner = true

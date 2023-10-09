@@ -75,6 +75,7 @@ func _process(delta):
 	apply_central_force(force)
 
 func _on_body_entered(body):
+	lock_rotation = false
 	die()
 
 func die():
@@ -85,6 +86,7 @@ func die():
 	var fire = fire_scene.instantiate()
 	fire.scale = 2 * Vector3.ONE
 	add_child(fire)
+
 
 	var ship_scene := load("res://ship.tscn")
 	var new_ship : Ship = ship_scene.instantiate()

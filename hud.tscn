@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcauprb4h3rxq"]
+
+[ext_resource type="Script" path="res://ThrottleBar.gd" id="1_7seon"]
+[ext_resource type="Script" path="res://hud.gd" id="1_lbkwg"]
+[ext_resource type="Script" path="res://BoostBar.gd" id="2_7ecpi"]
+[ext_resource type="Script" path="res://CheckpointsLabel.gd" id="3_6i3f5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvhdx"]
+bg_color = Color(0.572549, 0.596078, 0.698039, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jd6y"]
+bg_color = Color(0, 0.396078, 0.498039, 1)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lbkwg")
+
+[node name="ThrottlePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -262.0
+offset_right = 113.0
+offset_bottom = 260.0
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="ThrottleBar" type="ProgressBar" parent="ThrottlePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -242.0
+offset_right = 34.5
+offset_bottom = 147.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_nvhdx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8jd6y")
+max_value = 4.88
+value = 0.4
+fill_mode = 3
+show_percentage = false
+script = ExtResource("1_7seon")
+
+[node name="BoostBar" type="ProgressBar" parent="ThrottlePanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -34.5
+offset_top = -68.0
+offset_right = 36.5
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
+script = ExtResource("2_7ecpi")
+
+[node name="CheckpointsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.0
+offset_top = 20.0
+offset_right = 152.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="CheckpointsLabel" type="Label" parent="CheckpointsPanel"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 8.0
+offset_right = 287.0
+offset_bottom = 31.0
+text = "Checkpoints: 0"
+script = ExtResource("3_6i3f5")

@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmhpph6uqxcky"]
+
+[ext_resource type="PackedScene" uid="uid://e73yptr4omhp" path="res://asteroid_first.tscn" id="2_imuto"]
+[ext_resource type="PackedScene" uid="uid://cc3mfcgqkcjqp" path="res://spawn_point.tscn" id="3_0pu1m"]
+[ext_resource type="PackedScene" uid="uid://y118qpgdgoil" path="res://race_controller.tscn" id="4_pi4s0"]
+[ext_resource type="PackedScene" uid="uid://dcauprb4h3rxq" path="res://hud.tscn" id="5_4v47m"]
+[ext_resource type="PackedScene" uid="uid://ca3u5uepnaw7c" path="res://race_checkpoint.tscn" id="5_y0ykv"]
+
+[sub_resource type="Animation" id="Animation_jj12b"]
+resource_name = "l1_a1"
+length = 15.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.5, -0.2, 0, 15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 2,
+"values": [0.4898, 0.0, 0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_jb8y5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ybbm1"]
+_data = {
+"RESET": SubResource("Animation_jb8y5"),
+"l1_a1": SubResource("Animation_jj12b")
+}
+
+[sub_resource type="Curve3D" id="Curve3D_jku1r"]
+_data = {
+"points": PackedVector3Array(20.6529, -3.96278, -6.90573, -20.6529, 3.96278, 6.90573, -9.58, 19.99, -14.825, -5.64439, -4.75997, 0.968067, 5.64439, 4.75997, -0.968067, -25.7543, 32.1748, 6.03236, -2.02978, 3.27188, -0.696827, 2.02978, -3.27188, 0.696827, -4.25002, 36.9437, -26.6983, 13.812, -1.74585, 0.207507, -13.812, 1.74585, -0.207507, -9.58, 19.99, -14.825),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[node name="Level1" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.287227, -0.957863, 0, 0.957863, 0.287227, 0, 0, 0)
+
+[node name="Asteroids" type="Node3D" parent="."]
+
+[node name="AsteroidFirst" parent="Asteroids" instance=ExtResource("2_imuto")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -9.58, 19.99, -14.825)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroids"]
+autoplay = "l1_a1"
+libraries = {
+"": SubResource("AnimationLibrary_ybbm1")
+}
+
+[node name="Path3D" type="Path3D" parent="Asteroids"]
+curve = SubResource("Curve3D_jku1r")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Asteroids/Path3D"]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999996, 0, 0, 0, 0.999996, -9.58, 19.99, -14.825)
+rotation_mode = 0
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Asteroids/Path3D/PathFollow3D"]
+remote_path = NodePath("../../../AsteroidFirst")
+update_rotation = false
+update_scale = false
+
+[node name="SpawnPoint" parent="." instance=ExtResource("3_0pu1m")]
+unique_name_in_owner = true
+transform = Transform3D(0.387819, 0.233483, 0.891674, 0.0733562, 0.956499, -0.282363, -0.918812, 0.174915, 0.353821, 25.5422, 11.1751, -2.63561e-07)
+
+[node name="RaceController" parent="." instance=ExtResource("4_pi4s0")]
+
+[node name="RaceCheckpoint" parent="RaceController" instance=ExtResource("5_y0ykv")]
+transform = Transform3D(-0.707193, 0.583379, -0.399433, -0.707021, -0.583522, 0.399531, 0, 0.564952, 0.825123, -20.774, 27.3358, -19.1652)
+
+[node name="HUD" parent="." instance=ExtResource("5_4v47m")]

@@ -1,6 +1,6 @@
 extends ProgressBar
 
-@onready var spawn_point : SpawnPoint = %SpawnPoint
+var spawn_point : SpawnPoint
 var ship : Ship
 
 var duration_timer: Timer = null
@@ -10,6 +10,7 @@ var boost_active := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	spawn_point = owner.get_spawn_point()
 	ship = spawn_point.get_ship()
 	spawn_point.ship_respawned.connect(_on_spawnpoint_ship_respawned)
 	_bind_events()
