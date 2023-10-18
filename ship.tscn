@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwdjpbjw2q63r"]
+[gd_scene load_steps=9 format=3 uid="uid://dwdjpbjw2q63r"]
 
 [ext_resource type="Script" path="res://ship.gd" id="1_buv15"]
 
@@ -22,11 +22,14 @@ sky_material = SubResource("ProceduralSkyMaterial_r7alb")
 background_mode = 2
 sky = SubResource("Sky_5s5mf")
 
+[sub_resource type="BoxMesh" id="BoxMesh_dtkb1"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27dm4"]
 height = 2.644
 
 [node name="Ship" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+collision_mask = 11
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
@@ -58,6 +61,12 @@ skeleton = NodePath("../MeshInstance3D2")
 [node name="ShipCamera" type="Camera3D" parent="CollisionShape3D"]
 transform = Transform3D(1.91069e-15, -1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1, 0, -4.37114e-08, -0.957585, -3.93865, 0)
 environment = SubResource("Environment_yjho4")
+
+[node name="Cannon" type="MeshInstance3D" parent="CollisionShape3D"]
+unique_name_in_owner = true
+transform = Transform3D(-1.74556e-08, -0.134048, -2.64698e-23, 0.399338, -5.85943e-09, 0, 0, 0, 0.160141, -5.89483e-08, 1.34858, 0)
+mesh = SubResource("BoxMesh_dtkb1")
+skeleton = NodePath("../..")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.566912, -0.000428014, -0.634344)

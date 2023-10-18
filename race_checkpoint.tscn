@@ -15,6 +15,7 @@ height = 0.336
 radius = 7.905
 
 [node name="RaceCheckpoint" type="Area3D"]
+collision_layer = 8
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("TorusMesh_5ll7d")

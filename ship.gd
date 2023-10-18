@@ -25,6 +25,7 @@ var dead_ships: Array[Ship] = []
 @onready var collision_shape_3d = $CollisionShape3D
 @onready var boost_cooldown = %BoostCooldown
 @onready var boost_duration = %BoostDuration
+@onready var cannon = %Cannon
 
 
 func _process(delta):
@@ -33,6 +34,7 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("respawn"):
 		die()
+		return
 
 	if Input.is_action_pressed("pitch_up"):
 		collision_shape_3d.rotate_object_local(Vector3.FORWARD, -pitch_speed * delta)
@@ -57,6 +59,21 @@ func _process(delta):
 			boost_duration.start()
 			boost_activated.emit(boost_duration, boost_cooldown)
 
+
+	var p1 = collision_shape_3d.to_global(Vector3.ZERO)
+	var p2 = collision_shape_3d.to_global(Vector3.UP)
+	var forward = p2 - p1
+
+
+	if Input.is_action_just_pressed("shoot_primary"):
+		var projectile_scene := preload("res://projectile.tscn")
+		var projectile : Projectile = projectile_scene.instantiate()
+		projectile.add_collision_exception_with(self)
+		projectile.position = to_local(cannon.to_global(Vector3.ZERO))
+		projectile.linear_velocity = linear_velocity + projectile.speed * forward
+		add_child(projectile)
+
+
 	if boost_active:
 		if !boost_duration.is_stopped():
 			acceleration = boost_acceleration
@@ -67,11 +84,7 @@ func _process(delta):
 
 	throttle_changed.emit(acceleration, max_acceleration)
 
-	var p1 = collision_shape_3d.to_global(Vector3.ZERO)
-	var p2 = collision_shape_3d.to_global(Vector3.UP)
-
-	force = acceleration * (p2 - p1)
-
+	force = acceleration * forward
 	apply_central_force(force)
 
 func _on_body_entered(body):

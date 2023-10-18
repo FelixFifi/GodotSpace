@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://baqcbhtdvp78a"]
+
+[ext_resource type="Script" path="res://projectile.gd" id="1_gqiby"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qqoyr"]
+radius = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_mnf0h"]
+radius = 0.1
+height = 0.2
+
+[node name="Projectile" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 3
+gravity_scale = 0.0
+continuous_cd = true
+max_contacts_reported = 1
+contact_monitor = true
+lock_rotation = true
+script = ExtResource("1_gqiby")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qqoyr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_mnf0h")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
